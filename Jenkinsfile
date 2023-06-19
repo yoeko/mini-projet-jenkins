@@ -15,8 +15,8 @@ pipeline {
             agent any
             steps {
                 script {
-                    // dockerImage = docker.build registry + ":${IMAGE_TAG}"
-                    sh """docker build -t ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG} ."""
+                    dockerImage = docker.build registry + ":${IMAGE_TAG}"
+                    // sh """docker build -t ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG} ."""
                 }
             }
         }
@@ -25,7 +25,7 @@ pipeline {
             steps {
                 script {
                     sh """
-                    docker run -d --name ${IMAGE_NAME} -p 8081:80 ${IMAGE_NAME}:${IMAGE_TAG}
+                    docker run -d --name ${IMAGE_NAME} -p 8081:80 ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}
                     sleep 5
                     """
                 }
