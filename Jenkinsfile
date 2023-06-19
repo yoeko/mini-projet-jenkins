@@ -57,19 +57,19 @@ pipeline {
         //         sh """docker login -u ${DOCKER_USER} --password ${DOCKERHUB_CREDENTIALS} """
         //     }
         // }
-        stage('Push') {
-            steps {
-                script {
-                    //sh """docker push ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}"""
-                    docker.withRegistry( '', registryCredential ) 
-                    dockerImage.push()
-                }
-            }
-        }
+        // stage('Push') {
+        //     steps {
+        //         script {
+        //             //sh """docker push ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}"""
+        //             docker.withRegistry( '', registryCredential ) 
+        //             dockerImage.push()
+        //         }
+        //     }
+        // }
     }
-    post {
-        always {
-            sh 'docker logout'
-        }
-    }
+    // post {
+    //     always {
+    //         sh 'docker logout'
+    //     }
+    // }
 }
