@@ -6,6 +6,8 @@ pipeline {
 		STAGING = "lyk1719-staging"
 		PRODUCTION = "lyk1719-production"
         DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+        registry = "lyk1719/static-website"
+        registryCredential = 'dockerhub'
     }
     agent none
     stages {
@@ -13,7 +15,8 @@ pipeline {
             agent any
             steps {
                 script {
-                    sh """docker build -t ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG} ."""
+                    dockerImage = docker.build registry + ":${IMAGE_TAG}"
+                    //sh """docker build -t ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG} ."""
                 }
             }
         }
@@ -56,7 +59,9 @@ pipeline {
         }
         stage('Push') {
             steps {
-                sh """docker push ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}"""
+                //sh """docker push ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}"""
+                docker.withRegistry( '', registryCredential ) {
+                dockerImage.push()
             }
         }
     }
