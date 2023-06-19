@@ -2,8 +2,10 @@ pipeline {
     environment {
         IMAGE_NAME = "static-website"
 		IMAGE_TAG = "latest"
+        DOCKER_USER = "lyk1719"
 		STAGING = "lyk1719-staging"
 		PRODUCTION = "lyk1719-production"
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub')
     }
     agent none
     stages {
@@ -11,7 +13,7 @@ pipeline {
             agent any
             steps {
                 script {
-                    sh """docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."""
+                    sh """docker build -t ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG} ."""
                 }
             }
         }
@@ -36,16 +38,31 @@ pipeline {
                 }
             }
         }
-        // stage("Clean contaier") {
-        //     agent any
-        //     steps {
-        //         script {
-        //             sh """
-        //                 docker stop ${IMAGE_NAME}
-        //                 docker rm ${IMAGE_NAME}
-        //             """
-        //         }
-        //     }
-        // }
+        stage("Clean contaier") {
+            agent any
+            steps {
+                script {
+                    sh """
+                        docker stop ${IMAGE_NAME}
+                        docker rm ${IMAGE_NAME}
+                    """
+                }
+            }
+        }
+        stage('Docker login') {
+            steps {
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+            }
+        }
+        stage('Push') {
+            steps {
+                sh """docker push ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}"""
+            }
+        }
+    }
+    post {
+        always {
+            sh 'docker logout'
+        }
     }
 }
