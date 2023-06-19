@@ -52,16 +52,18 @@ pipeline {
                 }
             }
         }
-        stage('Docker login') {
-            steps {
-                sh """docker login -u ${DOCKER_USER} --password ${DOCKERHUB_CREDENTIALS} """
-            }
-        }
+        // stage('Docker login') {
+        //     steps {
+        //         sh """docker login -u ${DOCKER_USER} --password ${DOCKERHUB_CREDENTIALS} """
+        //     }
+        // }
         stage('Push') {
             steps {
-                //sh """docker push ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}"""
-                docker.withRegistry( '', registryCredential ) 
-                dockerImage.push()
+                script {
+                    //sh """docker push ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}"""
+                    docker.withRegistry( '', registryCredential ) 
+                    dockerImage.push()
+                }
             }
         }
     }
