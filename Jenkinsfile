@@ -65,7 +65,6 @@ pipeline {
         }
     }
     post {
-        agent any
         always {
             script {
                 sh 'docker logout'
