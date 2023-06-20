@@ -59,6 +59,7 @@ pipeline {
             }
         }
         stage('Push') {
+            agent any
             steps {
                 script {
                     sh """docker push ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}"""
