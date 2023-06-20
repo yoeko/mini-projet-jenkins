@@ -63,11 +63,12 @@ pipeline {
                 }
             }
         }
-    }
-    post {
-        always {
-            script {
-                sh 'docker logout'
+        stage('Logout') {
+            agent any
+            steps {
+                script {
+                    sh """docker logout"""
+                }
             }
         }
     }
