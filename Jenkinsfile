@@ -58,15 +58,15 @@ pipeline {
                 sh """docker login -u ${DOCKER_USER} --password dckr_pat_2_KNHRRnCRtsf2JgtqWcI-dSWNQ"""
             }
         }
-        // stage('Push') {
-        //     steps {
-        //         script {
-        //             //sh """docker push ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}"""
-        //             docker.withRegistry( '', registryCredential ) 
-        //             dockerImage.push()
-        //         }
-        //     }
-        // }
+        stage('Push') {
+            steps {
+                script {
+                    sh """docker push ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}"""
+                    // docker.withRegistry( '', registryCredential ) 
+                    // dockerImage.push()
+                }
+            }
+        }
     }
     // post {
     //     always {
