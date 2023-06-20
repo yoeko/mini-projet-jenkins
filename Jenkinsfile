@@ -5,7 +5,7 @@ pipeline {
         DOCKER_USER = "lyk1719"
 		STAGING = "lyk1719-staging"
 		PRODUCTION = "lyk1719-production"
-        // DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub')
         // registry = "lyk1719/static-website"
         // registryCredential = 'dockerhub'
     }
@@ -55,7 +55,8 @@ pipeline {
         stage('Docker login') {
             agent any
             steps {
-                sh """docker login -u ${DOCKER_USER} --password dckr_pat_2_KNHRRnCRtsf2JgtqWcI-dSWNQ"""
+                sh """echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"""
+                //sh """docker login -u ${DOCKER_USER} --password dckr_pat_2_KNHRRnCRtsf2JgtqWcI-dSWNQ"""
             }
         }
         stage('Push') {
