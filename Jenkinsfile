@@ -52,11 +52,11 @@ pipeline {
                 }
             }
         }
-        // stage('Docker login') {
-        //     steps {
-        //         sh """docker login -u ${DOCKER_USER} --password ${DOCKERHUB_CREDENTIALS} """
-        //     }
-        // }
+        stage('Docker login') {
+            steps {
+                sh """docker login -u ${DOCKER_USER} --password dckr_pat_2_KNHRRnCRtsf2JgtqWcI-dSWNQ"""
+            }
+        }
         // stage('Push') {
         //     steps {
         //         script {
