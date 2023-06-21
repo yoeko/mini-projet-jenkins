@@ -1,6 +1,10 @@
 Static Website Example
 ----------------------
 
+[![Build Status](http://ip10-0-2-3-ci9dedg80fdgqf4rihi0-8080.direct.docker.labs.eazytraining.fr/buildStatus/icon?job=build)](http://ip10-0-2-3-ci9dedg80fdgqf4rihi0-8080.direct.docker.labs.eazytraining.fr/job/build/)
+
+----------------------
+
 To be used with Cloud Academy labs.
 
 
